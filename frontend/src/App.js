@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Courses from "./components/Courses";
+import Dashboard from "./components/Dashboard";
 import "./App.css";
 
 function App() {
@@ -13,8 +14,10 @@ function App() {
       <Navbar setPage={setPage} />
       <div className="container">
         {page === "register" && <Register />}
-        {page === "login" && <Login />}
+        {page === "login" && <Login setPage={setPage} />} {/* ✅ pass setPage */}
         {page === "courses" && <Courses />}
+        {page === "Dashboard" && <Dashboard />}
+        
       </div>
     </>
   );

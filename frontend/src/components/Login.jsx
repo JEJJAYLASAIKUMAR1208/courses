@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../api/axios";
 
-export default function Login() {
+export default function Login({ setPage }) { // ✅ receive setPage
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -13,6 +13,9 @@ export default function Login() {
             const res = await api.post("/auth/login", form);
             localStorage.setItem("token", res.data.token);
             alert("Login successful");
+
+            // ✅ Switch to dashboard page
+            setPage("courses");
         } catch {
             alert("Invalid credentials");
         }
