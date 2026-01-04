@@ -1,89 +1,54 @@
-import { useEffect, useState } from "react";
-import api from "../api/axios";
+import React, { useEffect } from "react";
 
 export default function Courses() {
-    const [courses, setCourses] = useState([]);
-    const [form, setForm] = useState({
-        name: "",
-        description: "",
-        instructor: "",
-    });
-    const [editId, setEditId] = useState(null);
+  const courses = [
+    { name: "Java"},
+    { name: "Python"},
+    { name: "CPP"},
+    { name: "AWS" },
+    { name: "JavaScript"},
+    { name: "AI/ML"},
+    { name: "Frontend Development"},
+    { name: "Data Science"},
+    { name: "Swift"},
+    { name: "Kotlin"},
+    { name: "DevOps"},
+    { name: "Cloud Computing"},
+  ];
 
-    const loadCourses = async () => {
-        const res = await api.get("/courses");
-        setCourses(res.data);
+  useEffect(() => {
+    // Save the current body background
+    const originalBackground = document.body.style.background;
+
+    // Remove background completely
+    document.body.style.background = "white";
+
+    // Restore background when component unmounts
+    return () => {
+      document.body.style.background = originalBackground;
     };
+  }, []);
 
-    useEffect(() => {
-        loadCourses();
-    }, []);
+  const startExam = (courseName) => {
+    window.location.href = `/exam?course=${encodeURIComponent(courseName)}`;
+  };
 
-    const submit = async (e) => {
-        e.preventDefault();
-
-        if (editId) {
-            await api.put(`/courses/${editId}`, form);
-            setEditId(null);
-        } else {
-            await api.post("/courses", form);
-        }
-
-        setForm({ name: "", description: "", instructor: "" });
-        loadCourses();
-    };
-
-    const editCourse = (course) => {
-        setEditId(course.id);
-        setForm(course);
-    };
-
-    const deleteCourse = async (id) => {
-        await api.delete(`/courses/${id}`);
-        loadCourses();
-    };
-
-    return (
-        <div className="card">
-            <h3>Courses</h3>
-
-            <form onSubmit={submit} className="course-form">
-                <input
-                    placeholder="Course Name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                />
-
-                <input
-                    placeholder="Description"
-                    value={form.description}
-                    onChange={(e) => setForm({ ...form, description: e.target.value })}
-                />
-
-                <input
-                    placeholder="Instructor"
-                    value={form.instructor}
-                    onChange={(e) => setForm({ ...form, instructor: e.target.value })}
-                    required
-                />
-
-                <button type="submit">
-                    {editId ? "Update Course" : "Add Course"}
-                </button>
-            </form>
-
-            <ul className="course-list">
-                {courses.map((c) => (
-                    <li key={c.id}>
-                        <strong>{c.name}</strong> — {c.instructor}
-                        <div>
-                            <button onClick={() => editCourse(c)}>Edit</button>
-                            <button onClick={() => deleteCourse(c.id)}>Delete</button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div className="courses-page">
+      <h2>Your Available Courses</h2>
+      <div className="course-container">
+        {courses.map((course) => (
+          <div key={course.name} className="course-card">
+            <img
+              src={`/images/${course.img}`}
+              alt={course.name}
+              className="course-img"
+            />
+            <h3>{course.name}</h3>
+            <button onClick={() => startExam(course.name)}>Enroll</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

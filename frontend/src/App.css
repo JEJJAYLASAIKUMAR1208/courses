@@ -181,3 +181,51 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Courses Page Background */
+.courses-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: white; /* Override global background */
+}
+
+/* Course Container & Card Styles */
+.course-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.course-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.course-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+
+.course-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.course-card button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.course-card button:hover {
+  background: #218838;
+}
